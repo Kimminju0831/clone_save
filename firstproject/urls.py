@@ -15,15 +15,33 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from firstapp.views import main, detail, credit, main_map, signup, login
-import firstapp.views
+from firstapp.views import main, detail, credit, main_map, signup, login, new, create, search, post, profile, modify, edit, update, delete, post_like
+from firstapp.views import test, loading
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('signup/', signup, name='signup'),
-    path('', main, name='main'),
-    path('detail/', detail, name='detail'),
-    path('credit/', credit, name='credit'),
+    path('accounts/', include('accounts.urls')),
+
+    path('main/', main, name='main'),
+    path('detail/<str:id>', detail, name='detail'),
+    path('create/', create, name='create'),
+    path('credit/', credit, name='credit'),     
     path('map/', main_map, name='main_map'),
-    path('login/', login, name='login'),
-]
+    path('', loading, name='loading'),
+    
+    path('post/', post, name='post'),
+    path('search/', search, name='search'),
+   
+    path('profile/<str:username>', profile, name='profile'),
+    path('modify/', modify, name='modify'),
+    path('detail/edit/<str:id>', edit, name='edit'),
+    path('update/<str:id>', update, name='update'),
+    path('delete/<str:id>', delete, name='delete'),
+    path('like/<int:id>', post_like, name='post_like'),
+    path('test/', test, name='test'),
+
+    path('loading/', loading, name='loading'),
+
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

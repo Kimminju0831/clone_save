@@ -1,59 +1,73 @@
+{% extends 'blog/base.html' %}
+
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'css/basic.css' %}">
-  <title>Cli-mate</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rancho&display=swap" rel="stylesheet">
-</head>
-<body>
-  
-  <div class="header">
-    <h1 class="title">Cli-mate</h1>
-    <button type="button" class="btn">logout</button>
-    <img src="https://icongr.am/jam/bus.svg?size=35&color=currentColor"> <!--상단바 프로필사진-->
-  </div>
-  <div class = "detail-card">
-    <div class="card">
-      <div class="card-body">
-        <div class="card-header">
-          <div class="profile-picture">
-            <img src="https://icongr.am/jam/bus.svg?size=35&color=currentColor"> <!--프로필 사진-->
+
+  <body>
+  {%block content%}
+  <link rel="stylesheet" href="../../static/css/basic.css">
+    <div class = "detail-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-header">
+            <div class="profile-picture">
+              <img src="https://image.flaticon.com/icons/png/512/149/149071.png"> <!--프로필 사진-->
+            </div>
+            <h2 class="card-writer">{{ blog.author }}</h2> <!--작성자 이름-->
           </div>
-          <h2 class="card-writer">Writer</h2> <!--작성자 이름-->
+
+            {% if user == blog.author %}
+              <a class ="edit" href="{% url 'edit' blog.id %}">수정</a>
+              <a class ="delete" href="{% url 'delete' blog.id %}">삭제</a>
+            {% endif %}
+          <div class="main-picture">
+            <img src="{{blog.images.url}}">
+          </div>                                <!--main 이미지-->
         </div>
-        <div class="main-picture">
-          <img src="https://images.unsplash.com/photo-1549643276-fdf2fab574f5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80">
-        </div>                                <!--main 이미지-->
-      </div>
-      <a href="{% url 'main' %}">메인 페이지 임시 버튼</a>
-      <a href="{% url 'main_map' %}">맵 페이지 임시 버튼</a>
-      <div class="sub-comment">
-        <p class="Hash-tag">##경북대학교 #대현동</p> <!--해시태그 시간 좋아요-->
-        <p class="Time">Time</p>
-        <p class="Like">Like</p>
-      </div>
-      <div class="main-comment">
-        <p>Body</p>              <!--본문-->               
-      </div>  
-    </div>
-    <div class="card2">
-      <div class="weather-picture">
-        <img src="https://icongr.am/jam/bus.svg?size=35&color=currentColor"> 
-      </div>
-      <div class="comment">
-       <!--작성된 댓글 넣을 공간-->
-      </div>
-        <div class="comment-input">
-          <input type="text" value="댓글을 작성하세요">
-          <button type="button" class="submit-btn">게시</button> <!--댓글 작성창-->
+        
+        <a class ="map" href="{% url 'main_map' %}">맵 페이지 임시 버튼</a>
+        <div class="Like"><a href = "{% url 'post_like' blog.id %}">{{message}}</a>
+          {{blog.likes.count}}명이 좋아합니다!</div>
+        <div class="sub-comment">
+          <p class="Hash-tag">{{blog.hashtag}}</p> <!--해시태그 시간 좋아요-->
+          <p class="Time">{{blog.created_at|date:'m-d h:i' }}</p>
         </div>
+        <div class="main-comment">
+          <p>{{blog.body}}</p>              <!--본문-->               
+        </div>  
+      </div>
+      <div class="card2">
+        <div class="weather-picture">
+          {% if blog.weather == "['rainy']" %}
+                <img class="weather" src='https://image.flaticon.com/icons/png/512/826/826957.png'>
+                {% endif %}
+                {% if blog.weather == "['sunny']" %}
+                <img class="weather" src='https://image.flaticon.com/icons/png/512/869/869869.png'>
+                {% endif %}
+                {% if blog.weather == "['wind']" %}
+                <img class="weather" src='https://image.flaticon.com/icons/png/512/4150/4150923.png'>
+                {% endif %}
+                {% if blog.weather == "['cloudy']" %}
+                <img class="weather" src='https://image.flaticon.com/icons/png/512/1146/1146869.png'>
+                {% endif %}
+        </div>
+        <div class="comment">
+        <!--작성된 댓글 넣을 공간-->
+          {% for comment in comments %}
+          {{user.username}} : {{comment.body}} - {{comment.date|date:'m-d h:i' }}
+          <br>
+        {% endfor %}
+          </div>
+          
+          <form method="POST">
+            <div class="comment-input">
+              {% csrf_token %}
+              <input name="body" type="text" value="댓글 작성">
+              <input class="submit-btn" type="submit" value="게시">
+            </div>
+          </form>      
+            <!--댓글 작성창-->
+      </div>
     </div>
-  </div>
-</body>
+  {%endblock%}
+  </body>
 </html>

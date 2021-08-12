@@ -5,16 +5,27 @@
 } 
 
 html{
-    background: url(https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1494&q=80) no-repeat center center fixed;
+    background-color: rgb(240, 237, 233);
     background-size: cover;
 }
 
 .nav-wrapper{
-    background-color: rgb(196, 194, 194);
-    display: flex;
-    justify-content: flex-end;
+    background-color: rgb(106, 159, 177);
+    height:80px;
+    padding:0px;
+    margin:0px;
+    font-family: 'Rancho', cursive;
+    display:flex;
+    justify-content:flex-end;
     align-items: center;
-    padding: 20px;
+    text-align: center;
+}
+ 
+#support_btn{
+    position: fixed;
+    width:50px;
+    height:50px;
+    margin-left: -80px;
 }
 
 .nav{
@@ -28,14 +39,17 @@ html{
 
 .logo img{
     justify-content: center;
+    width:240px;
+    height:100px;
 }
 
 .nav li{
     font-size: 25px;
 }
 
-.nav .logout{
+.nav .logout {
     margin-top: 10px;
+    margin-bottom: 10px;
     margin-right: 30px;
 }
 
@@ -67,6 +81,14 @@ html{
 }
 
 
+.Id_Profile
+{
+    margin-top: 5px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+    width: 35px;
+    height: 35px;
+}
 
 .Id{
     margin-top: 12px;
@@ -88,4 +110,10 @@ input::-webkit-input-placeholder { color: #f00; }
 #map {
     border-radius: 10px;
     border: 3px solid white;
+}
+
+.contentContainer{
+    width:160;
+    height:100;
+    overflow:auto;
 }
