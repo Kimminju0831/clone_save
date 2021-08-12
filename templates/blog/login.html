@@ -1,35 +1,37 @@
+{% extends 'blog/base.html'%}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'css/signup.css' %}">
-  <title>Cli-mate</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rancho&display=swap" rel="stylesheet">
-</head>
-<body>
-  <div class="header">
-    <h1 class="title">Cli-mate</h1>
-    <button type="button" class="btn">login</button>
-    <img src="https://icongr.am/jam/bus.svg?size=35&color=currentColor"> <!--상단바 프로필사진-->
-  </div>
-  <div class ="main">
-    <div class="ID">
-      <button type="button" class="id">ID</button>
-      <input type="text" class="input-id">
-    </div>
-    <div class="Password">
-      <button type="button" class="password">비밀번호</button>
-      <input type="password" class="input-password">
-    </div>
-    <div class="enter">
-      <button type="button" class="btn2">로그인</button>
-      <button type="button" class="btn2">회원가입</button>
-    </div>
-  </div>
-</body>
-</html>
+{% block content%}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+
+    {% if error %}
+    <script type="text/javascript">
+
+      alert("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
+
+    </script>
+    {% endif %}
+
+    <body>
+      <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="position">
+          <div class ="main">
+            <div class="ID">
+              <button type="button" class="id">ID</button>
+              <input class ="input-id" name="username" type="text" value="">
+            </div>
+            <div class="Password">
+              <button type="button" class="password">비밀번호</button>
+              <input class ="input-password" name="password" type="password" value="">
+            </div>
+          </div>
+          <div class="enter">
+              <button type="button" class="btn2"><a href="{% url 'signup' %}">회원가입</a></button>
+              <input class="btn2" type="submit" value="로그인">
+          </div>
+        </div>  
+      </form>
+    </body>
+{%endblock%}

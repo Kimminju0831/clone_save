@@ -1,39 +1,30 @@
+{% extends 'blog/base.html'%}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'css/signup.css' %}">
-  <title>Cli-mate</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rancho&display=swap" rel="stylesheet">
-</head>
+
+{% block content%}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
 <body>
-  <div class="header">
-    <h1 class="title">Cli-mate</h1>
-    <button type="button" class="btn">login</button>
-    <img src="https://icongr.am/jam/bus.svg?size=35&color=currentColor"> <!--상단바 프로필사진-->
-  </div>
-  <div class ="main">
-    <div class="ID">
-      <button type="button" class="id">ID</button>
-      <input type="text" class="input-id">
+  <form method="POST" action="{% url 'signup' %}">
+    {% csrf_token %}
+      <div class ="main">
+        <div class="ID">
+          <button type="button" class="id">ID</button>
+          <input class ="input-id"name="username" type="text" value="">
+        </div>
+        <div class="Password">
+          <button type="button" class="password">비밀번호</button>
+          <input class ="input-password" name="password" type="password" value="">
+        </div>
+        <div class="Password2">
+          <button type="button" class="password2">비밀번호 확인</button>
+          <input class="input-password2" name="password2" type="password" value="">
+        </div>
+      </div>
+      <div class="enter">
+        <button type="button" class="btn2"><a href="{% url 'login' %}">취소</a></button>
+        <button type="submit" class="btn2" value="회원가입">회원가입</button>
+      </div>
     </div>
-    <div class="Password">
-      <button type="button" class="password">비밀번호</button>
-      <input type="password" class="input-password">
-    </div>
-    <div class="Password2">
-      <button type="button" class="password2">비밀번호 확인</button>
-      <input type="password" class="input-password2">
-    </div>
-    <div class="Select-image">
-      <button type="button" class="image">이미지 선택</button>
-      <input type="file" class="select-image">
-    </div>
-  </div>
+  </form>
 </body>
-</html>
+{%endblock%}

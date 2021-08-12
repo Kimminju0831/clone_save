@@ -1,112 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'blog/base.html' %}
+
+{%block content%}
     <link rel="stylesheet" href="../../static/css/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>   
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@500&display=swap" rel="stylesheet">
-    <title>Community</title>
-</head>
-<body>
-    <div class="nav-wrapper">
-        <div class="logo">
-            <img src="../../static/css/logo_back.PNG" >
-        </div>
-        <ul class="nav">
-            <li><a href="{% url 'credit' %}"><img src="https://image.flaticon.com/icons/png/512/174/174188.png" id="support_btn"></a></li>
-            <li style="color: white;" class="logout"><a href="#">Logout</a></li>
-            <li><img class="nav-profile" src="https://image.flaticon.com/icons/png/512/149/149071.png"></li>
-        </ul>
-    </div>
-    <!--여기까지가 Navbar-->
     <div class="search-wrapper">
         <div class="search">
-            <input type="text" value=" # Search ">
+            <form action="{% url 'search' %}" method='GET'>  
+            <input type="text" name="search_key" value="{{ search_key }}">
+            </form>
             <img src="https://image.flaticon.com/icons/png/512/622/622669.png" >
         </div>
         
     <!--여기까지가 검색창-->    
+
     </div>
-    <a href="{% url 'detail' %}">디테일 페이지 임시 버튼</a>
     <a href="{% url 'main_map' %}">맵 페이지 임시 버튼</a>
     <div class="card-wrapper">
+    {% for blog in blogs %}    
         <div class="card">
             <div class="card-info">
-                <img class="Id_Profile" src="https://image.flaticon.com/icons/png/512/149/149071.png">
-                <p class="Id">eun_di</p>
-                <img class="weather" src="https://image.flaticon.com/icons/png/512/1146/1146869.png">
-                <p class="clock">11:03</p>
+                {%if person.profile.profile_photo%}
+                    <img class="Id_Profile" style="border-radius:50px;" src={{person.profile.profile_photo.url}}>
+                {%else%}
+                    <img class="Id_Profile" src="https://image.flaticon.com/icons/png/512/149/149071.png">
+                {%endif%}
+                
+                <p class="Id">{{ blog.author }}</p>
+                
+                
+                {% if blog.weather == "['rainy']" %}
+                <img class="weather" src='https://image.flaticon.com/icons/png/512/826/826957.png'>
+                {% endif %}
+                {% if blog.weather == "['sunny']" %}
+                <img class="weather" src='https://image.flaticon.com/icons/png/512/869/869869.png'>
+                {% endif %}
+                {% if blog.weather == "['wind']" %}
+                <img class="weather" src='https://image.flaticon.com/icons/png/512/4150/4150923.png'>
+                {% endif %}
+                {% if blog.weather == "['cloudy']" %}
+                <img class="weather" src='https://image.flaticon.com/icons/png/512/1146/1146869.png'>
+                {% endif %}
+                <p class="clock">{{ blog.created_at|date:'m-d h:i' }}</p>
             </div>
             <div class="card-banner">
-                <div class="card-profile-content">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80">
-                </div>
-                <img src="https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80">
+                <a href="{%url 'detail' blog.id%}"><img src="{{blog.images.url}}" alt=""></a>
             </div>
             <div class="card-body">
-                <p class="hastag">#경북대학교 #대현동</p>
-                <p class="desc">비 올 것 같아요! 우산 챙기세요! ..</p>
+                <p class="hastag">{{blog.hashtag}}</p>
+                <p class="desc">{{blog.body}}</p>
             </div>
         </div>
-        <div class="card">
-            <div class="card-info">
-                <img class="Id_Profile" src="https://image.flaticon.com/icons/png/512/149/149071.png">
-                <p class="Id">sam_gyup</p>
-                <img class="weather" src="https://image.flaticon.com/icons/png/512/826/826957.png">
-                <p class="clock">13:40</p>
-            </div>
-            <div class="card-banner">
-                <div class="card-profile-content">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80">
-                </div>
-                <img src="https://images.unsplash.com/photo-1517206577696-61bd6e54b558?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=668&q=80">
-            </div>
-            <div class="card-body">
-                <p class="hastag">#경북대학교 #대현동</p>
-                <p class="desc">이쯤되면 기상청이 아니라 기상..</p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-info">
-                <img class="Id_Profile" src="https://image.flaticon.com/icons/png/512/149/149071.png">
-                <p class="Id">Son_JY</p>
-                <img class="weather" src="https://image.flaticon.com/icons/png/512/869/869869.png">
-                <p class="clock">18:20</p>
-            </div>
-            <div class="card-banner">
-                <div class="card-profile-content">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80">
-                </div>
-                <img src="https://images.unsplash.com/photo-1419833173245-f59e1b93f9ee?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80">
-            </div>
-            <div class="card-body">
-                <p class="hastag">#경북대학교 #대현동</p>
-                <p class="desc">비 그치고 해가 떴어요!</p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-info">
-                <img class="Id_Profile" src="https://image.flaticon.com/icons/png/512/149/149071.png">
-                <p class="Id">Lee.J.H</p>
-                <img class="weather" src="https://image.flaticon.com/icons/png/512/4150/4150923.png">
-                <p class="clock">20:20</p>
-            </div>
-            <div class="card-banner">
-                <div class="card-profile-content">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80">
-                </div>
-                <img src="https://images.unsplash.com/photo-1507502707541-f369a3b18502?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80">
-            </div>
-            <div class="card-body">
-                <p class="hastag">#경북대학교 #대현동</p>
-                <p class="desc">밤이 되니까 쌀쌀해요 옷 따뜻하게..</p>
-            </div>
-        </div>      
+    {% endfor %}
     </div>
-    <a href="#head"><img src="https://image.flaticon.com/icons/png/512/875/875068.png" id="fixedbutton"></a>
-</body>
-</html>
+    <a href="{% url 'post' %}"><img src="https://image.flaticon.com/icons/png/512/875/875068.png" id="fixedbutton"></a>
+{%endblock%}

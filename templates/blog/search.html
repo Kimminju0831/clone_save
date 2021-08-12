@@ -1,0 +1,36 @@
+{% extends 'blog/base.html'%}
+
+{%block content%}
+    <link rel="stylesheet" href="../../static/css/main.css">
+    <div class="search-wrapper">
+        <div class="search">
+            <form action="" method='GET'>  
+            <input type="text" name="search_key" value="{{ search_key }}">
+            </form>
+            <img src="https://image.flaticon.com/icons/png/512/622/622669.png" >
+        </div>
+    </div>
+    <div class="row">
+     <div id="blog_list_search" class="search_list">
+        <div class="card-wrapper">
+            {% for blog in blog_list %}
+            <div class="card">
+                <div class="card-info">
+                    <img class="Id_Profile" src="https://image.flaticon.com/icons/png/512/149/149071.png">
+                    <p class="Id">{{ blog.author }}</p>
+                    <img class="weather" src="https://image.flaticon.com/icons/png/512/1146/1146869.png">
+                    <p class="clock">{{blog.created_at}}</p>
+                </div>
+                <div class="card-banner">
+                  <a href="{%url 'detail' blog.id%}"><img src="{{blog.images.url}}" alt=""></a>
+                </div>
+                <div class="card-body">
+                    <p class="hastag">{{blog.hashtag}}</p>
+                    <p class="desc">{{blog.body}}</p>
+                </div>
+            </div> 
+         {% endfor %}
+        </div>
+     </div>
+    </div>
+{%endblock%}
